@@ -1,6 +1,6 @@
 # QuickIris
 
-QuickIris is intended to create quicK *Iris backend* service with all required plugins along with basic example.
+QuickIris is intended to create quick *Iris backend* service with all required plugins along with basic example.
 
 ## Goals
 - [x] Basic Iris framework configuration with API's
