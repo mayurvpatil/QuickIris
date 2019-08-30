@@ -13,13 +13,15 @@ import (
 	"github.com/iris-contrib/middleware/jwt"
 )
 
+var jwtSecret = []byte("My Secret")
+
 func getTokenHandler(ctx iris.Context) {
 	token := jwt.NewTokenWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"foo": "bar",
 	})
 
 	// Sign and get the complete encoded token as a string using the secret
-	tokenString, _ := token.SignedString([]byte("My Secret"))
+	tokenString, _ := token.SignedString(jwtSecret)
 
 	ctx.HTML(`Token: ` + tokenString + `<br/><br/>
     <a href="/secured?token=` + tokenString + `">/secured?token=` + tokenString + `</a>`)
@@ -45,7 +47,7 @@ func main() {
 		Extractor: jwt.FromParameter("token"),
 
 		ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
-			return []byte("My Secret"), nil
+			return jwtSecret, nil
 		},
 		SigningMethod: jwt.SigningMethodHS256,
 	})
